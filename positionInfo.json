@@ -1,0 +1,14 @@
+{
+  "controller": {
+    "width": 400,
+    "height": 200,
+    "x": 0,
+    "y": 100
+  },
+  "viewer": {
+    "width": 640,
+    "height": 389,
+    "x": 640,
+    "y": 23
+  }
+}
