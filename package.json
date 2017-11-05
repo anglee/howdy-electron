@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/anglee/howdy-electron#readme",
   "devDependencies": {
-    "electron": "^1.7.9"
+    "electron": "^1.7.9",
+    "lodash": "^4.17.4"
   }
 }
