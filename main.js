@@ -1,21 +1,39 @@
-const _ = require('lodash');
-console.log('_.VERSION', _.VERSION);
+const { app, BrowserWindow, ipcMain } = require('electron');
+const path = require('path');
+let mainWindow;
+let viewerWindow;
 
-/*
-(async () => {
-  const page = 1;
-  const query = 'cat';
-  const opts = {
-    method: 'GET',
-    headers: {
-      Authorization: 'Client-ID 2032c1feddefa31'
-    },
-  };
-  const response = await fetch(
-    `https://api.imgur.com/3/gallery/search/top/all/${page}?q=${query}`,
-    //`http://ec2-107-21-76-203.compute-1.amazonaws.com/imgur-proxy/${page}?q=${query}`,
-    opts
-  ).then(res => res.json());
-  console.log('response', response);
-})();
-*/
+app.on('ready', () => {
+  mainWindow = new BrowserWindow({
+    width: 400,
+    height: 300,
+    x: 0,
+    y: 100,
+  });
+  mainWindow.loadURL(path.join('file:///', __dirname, 'controller.html'));
+
+  mainWindow.on('move', (event) => {
+    console.log("window moved", mainWindow.getPosition());
+  });
+
+  viewerWindow = new BrowserWindow({
+    width: 400,
+    height: 300,
+    x: 450,
+    y: 100,
+  });
+
+  viewerWindow.loadURL(path.join('file:///', __dirname, 'viewer.html'));
+  viewerWindow.on('move', (event) => {
+    console.log("window moved", viewerWindow.getPosition());
+  });
+
+  ipcMain.on('controller-toggle-odd', (event, props) => {
+    console.log("toggle odd", props.checked);
+    viewerWindow.webContents.send('main-toggle-odd', { checked: props.checked });
+  });
+  ipcMain.on('controller-toggle-even', (event, props) => {
+    console.log("toggle odd", props.checked);
+    viewerWindow.webContents.send('main-toggle-even', { checked: props.checked });
+  });
+});
