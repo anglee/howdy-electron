@@ -5,6 +5,8 @@ const fs = require('fs');
 
 let controllerWindow;
 let viewerWindow;
+let chartWindow;
+let tableWindow;
 //
 // const positionInfo = {
 //   controller: {
@@ -77,5 +79,45 @@ app.on('ready', () => {
       }
     );
   };
+
+  chartWindow = new BrowserWindow(positionInfo.chart);
+  chartWindow.loadURL(path.join('file:///', __dirname, 'chart.html'));
+  chartWindow.on('ready-to-show', () => {
+    chartWindow.show();
+  });
+  chartWindow.on('move', (event) => {
+    console.log("window moved", chartWindow.getPosition());
+    const position = chartWindow.getPosition();
+    positionInfo.chart.x = position[0];
+    positionInfo.chart.y = position[1];
+    console.log("window moved", chartWindow.getSize());
+    const size = chartWindow.getSize();
+    positionInfo.chart.width = size[0];
+    positionInfo.chart.height = size[1];
+  });
+  chartWindow.webContents.openDevTools();
+
+  tableWindow = new BrowserWindow(positionInfo.table);
+  tableWindow.loadURL(path.join('file:///', __dirname, 'table.html'));
+  tableWindow.on('ready-to-show', () => {
+    tableWindow.show();
+  });
+  tableWindow.on('move', (event) => {
+    console.log("window moved", tableWindow.getPosition());
+    const position = tableWindow.getPosition();
+    positionInfo.table.x = position[0];
+    positionInfo.table.y = position[1];
+    console.log("window moved", tableWindow.getSize());
+    const size = tableWindow.getSize();
+    positionInfo.table.width = size[0];
+    positionInfo.table.height = size[1];
+  });
+  // tableWindow.webContents.openDevTools();
+
+  ipcMain.on('chart-date-update', (event, props) => {
+    console.log("chart UPdated");
+    tableWindow.webContents.send('main-chart-date-update', { data: props.data });
+  });
+
   setMainMenu({ onSaveLayout });
 });

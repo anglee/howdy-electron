@@ -1,14 +1,26 @@
 {
   "controller": {
-    "width": 400,
-    "height": 200,
-    "x": 0,
-    "y": 100
+    "width": 213,
+    "height": 259,
+    "x": 39,
+    "y": 23
   },
   "viewer": {
-    "width": 640,
-    "height": 389,
-    "x": 640,
-    "y": 23
+    "width": 414,
+    "height": 259,
+    "x": 272,
+    "y": 96
+  },
+  "chart": {
+    "width": 1035,
+    "height": 259,
+    "x": 245,
+    "y": 535
+  },
+  "table": {
+    "width": 414,
+    "height": 259,
+    "x": 712,
+    "y": 165
   }
 }
